@@ -6,3 +6,6 @@ resource "aws_instance" "sample" {
 provider "aws" {
   region = "us-east-1"
 }
+output "ip" {
+  value = aws_instance.sample.private_ip
+}
