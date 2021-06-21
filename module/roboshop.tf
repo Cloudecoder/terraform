@@ -4,9 +4,7 @@ resource "aws_instance" "sample" {
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 }
 
-provider "aws" {
-  region = "us-east-1"
-}
+
 output "ip" {
   value = aws_instance.sample.private_ip
 }
