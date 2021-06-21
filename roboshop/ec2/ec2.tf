@@ -7,3 +7,7 @@ resource "aws_spot_instance_request" "cheap_worker" {
     Name        = "sample"
   }
 }
+
+provider "aws" {
+  region = "us-east-1"
+}
