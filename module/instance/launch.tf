@@ -6,3 +6,7 @@ resource "aws_instance" "sample" {
 }
 
 variable "sg_id" {}
+
+provider "aws" {
+  region = "us-east-1"
+}
