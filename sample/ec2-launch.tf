@@ -1,7 +1,7 @@
 resource "aws_spot_instance_request" "ec2" {
-  ami               = "ami-059e6ca6474628ef0"
-  instance_type     = "t2.micro"
-  security_groups   = [aws_security_group.allow_ssh.id]
+  ami                    = "ami-059e6ca6474628ef0"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 }
 
 resource "aws_ec2_tag" "ec2" {
