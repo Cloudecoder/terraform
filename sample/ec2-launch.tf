@@ -6,15 +6,11 @@ resource "aws_spot_instance_request" "ec2" {
 
 resource "aws_ec2_tag" "ec2" {
   resource_id = aws_spot_instance_request.ec2.id
-  key         = "Name"
-  value       = "server1"
+  key         = ["Name", "monitor"]
+  value       = ["server1","yes"]
   depends_on = [aws_spot_instance_request.ec2]
 }
-resource "aws_ec2_tag" "ec2" {
-  resource_id = aws_spot_instance_request.ec2.id
-  key         = "monitor"
-  value       = "yes"
-}
+
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow ssh inbound traffic"
@@ -24,7 +20,7 @@ resource "aws_security_group" "allow_ssh" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = [0.0.0.0/0]
+    cidr_blocks      = ["0.0.0.0/0"]
 
   }
 
