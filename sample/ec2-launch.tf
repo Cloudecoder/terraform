@@ -18,6 +18,7 @@ resource "aws_ec2_tag" "tag" {
   depends_on = [aws_spot_instance_request.ec2]
 }
 
+
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow ssh inbound traffic"
