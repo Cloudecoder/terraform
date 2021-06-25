@@ -11,7 +11,7 @@ resource "aws_ec2_tag" "ec2" {
   depends_on = [aws_spot_instance_request.ec2]
 }
 
-resource "aws_ec2_tag" "ec2" {
+resource "aws_ec2_tag" "tag" {
   resource_id = aws_spot_instance_request.ec2.id
   key         = ["monitor"]
   value       = ["yes"]
