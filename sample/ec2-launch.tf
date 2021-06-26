@@ -15,6 +15,14 @@ resource "aws_ec2_tag" "ec2" {
 
 }
 
+terraform {
+  backend "s3" {
+    bucket               = "storetf"
+    key                  = "sample/tfstate"
+    region               = "us-east-1"
+    dynamodb_table       = "terraform"
+  }
+}
 resource "aws_security_group" "allow_ssh" {
   name                   = "allow_ssh"
   description            = "Allow ssh inbound traffic"
