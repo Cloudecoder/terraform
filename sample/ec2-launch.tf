@@ -5,35 +5,35 @@ resource "aws_instance" "ec2" {
 }
 
 output "public_ip" {
-  value = aws_instance.ec2.private_ip
+  value                  = aws_instance.ec2.private_ip
 }
 
 resource "aws_ec2_tag" "ec2" {
-  resource_id = aws_instance.ec2.id
-  key         = "Name"
-  value       = "terraform"
+  resource_id            = aws_instance.ec2.id
+  key                    = "Name"
+  value                  = "terraform"
 
 }
 
 resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
-  description = "Allow ssh inbound traffic"
+  name                   = "allow_ssh"
+  description            = "Allow ssh inbound traffic"
 
   ingress {
-    description      = "allow ssh"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description          = "allow ssh"
+    from_port            = 22
+    to_port              = 22
+    protocol             = "tcp"
+    cidr_blocks          = ["0.0.0.0/0"]
 
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    from_port            = 0
+    to_port              = 0
+    protocol             = "-1"
+    cidr_blocks          = ["0.0.0.0/0"]
+    ipv6_cidr_blocks     = ["::/0"]
   }
 
   tags = {
