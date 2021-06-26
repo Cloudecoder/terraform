@@ -1,23 +1,19 @@
-resource "aws_spot_instance_request" "ec2" {
+resource "aws_instance" "ec2" {
   ami                    = "ami-059e6ca6474628ef0"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 }
 
+output "public_ip" {
+  value = aws_instance.ec2.private_ip
+}
+
 resource "aws_ec2_tag" "ec2" {
-  resource_id = aws_spot_instance_request.ec2.id
+  resource_id = aws_instance.ec2.id
   key         = "Name"
-  value       = "server1"
-  depends_on = [aws_spot_instance_request.ec2]
-}
+  value       = "terraform"
 
-resource "aws_ec2_tag" "tag" {
-  resource_id = aws_spot_instance_request.ec2.id
-  key         = "monitor"
-  value       = "yes"
-  depends_on = [aws_spot_instance_request.ec2]
 }
-
 
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
@@ -43,6 +39,10 @@ resource "aws_security_group" "allow_ssh" {
   tags = {
     Name = "allow_ssh"
   }
+}
+
+output "sg_id" {
+  value = aws_security_group.allow_ssh.id
 }
 
 provider "aws" {
