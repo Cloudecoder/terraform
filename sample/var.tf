@@ -7,5 +7,5 @@ output "number_of_instance" {
 }
 
 output "name_of_instance" {
-  value = element(var.server , count.index)
+  value = element(var.server)
 }
