@@ -6,7 +6,7 @@ resource "aws_instance" "ec2" {
 }
 
 output "public_ip" {
-  value                  = aws_instance.ec2.private_ip
+  value                  = element(aws_instance.ec2.*.private_ip, count.index)
 }
 
 resource "aws_ec2_tag" "ec2" {
