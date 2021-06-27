@@ -1,7 +1,8 @@
 resource "aws_instance" "ec2" {
+  count                  = length(var.server)
   ami                    = "ami-059e6ca6474628ef0"
   instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+  vpc_security_group_ids = aws_security_group.allow_ssh.id
 }
 
 output "public_ip" {
@@ -9,20 +10,15 @@ output "public_ip" {
 }
 
 resource "aws_ec2_tag" "ec2" {
-  resource_id            = aws_instance.ec2.id
+  count                  = length(var.server)
+  resource_id            = element(aws_instance.ec2.*.id , count.index)
   key                    = "Name"
-  value                  = "terraform"
+  value                  = element(var.server, count.index)
 
 }
 
-terraform {
-  backend "s3" {
-    bucket               = "storetf"
-    key                  = "sample/tfstate"
-    region               = "us-east-1"
-    dynamodb_table       = "terraform"
-  }
-}
+
+
 resource "aws_security_group" "allow_ssh" {
   name                   = "allow_ssh"
   description            = "Allow ssh inbound traffic"

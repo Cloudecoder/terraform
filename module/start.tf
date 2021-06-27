@@ -1,6 +1,6 @@
 module "instance" {
   source = "./instance"
-  sg_id = module.security_group.sg_id
+  sg_id  = module.security_group.sg_id
 }
 
 module "security_group" {
