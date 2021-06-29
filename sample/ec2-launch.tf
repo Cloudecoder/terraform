@@ -5,9 +5,8 @@ resource "aws_instance" "ec2" {
   vpc_security_group_ids = aws_security_group.allow_ssh.id
 }
 
-output "public_ip" {
-  value                  = aws_instance.ec2.private_ip[count.index]
-}
+
+
 
 resource "aws_ec2_tag" "ec2" {
   count                  = length(var.server)
