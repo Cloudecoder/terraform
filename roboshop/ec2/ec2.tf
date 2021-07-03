@@ -34,3 +34,6 @@ resource "aws_route53_record" "dns" {
 
 
 
+provider "aws" {
+  region = "us-east-1"
+}
