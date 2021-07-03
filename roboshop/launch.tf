@@ -3,8 +3,8 @@ module "ec2" {
   COMPONENTS   = var.COMPONENTS
 }
 
-module "ansible_apply" {
+module "ansible-apply" {
   depends_on   = [module.ec2]
-  source       = "./ansible"
+  source       = "./ansible-apply"
   COMPONENTS   = var.COMPONENTS
 }
