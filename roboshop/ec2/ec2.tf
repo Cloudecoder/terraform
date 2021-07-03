@@ -28,7 +28,7 @@ resource "aws_route53_record" "dns" {
   type                        = "A"
   zone_id                     = "Z048532427Z8A2VSNE7P3"
   ttl                         = "300"
-  records                     = [aws_spot_instance_request.launch.*.private_ip,count.index)]
+  records                     = [aws_spot_instance_request.launch.*.private_ip,count.index]
 }
 
 
