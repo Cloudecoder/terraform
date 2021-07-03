@@ -1,7 +1,7 @@
 resource "aws_spot_instance_request" "launch" {
   count                       = length(var.COMPONENTS)
   ami                         = "ami-059e6ca6474628ef0"
-  spot_price                  = "0.0031"
+  spot_price                  = "0.0116"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["sg-078ae966242083129"]
 
@@ -19,7 +19,7 @@ resource "time_sleep" "waiting" {
 resource "aws_ec2_tag" "spot" {
   count                       = length(var.COMPONENTS)
   key                         = "name"
-  resource_id                 = element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
+  resource_id                 =  element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
   value                       = element(var.COMPONENTS,count.index)
 }
 
