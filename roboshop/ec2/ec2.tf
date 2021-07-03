@@ -17,7 +17,6 @@ resource "time_sleep" "waiting" {
 }
 
 resource "aws_ec2_tag" "spot" {
-  depends_on                  = [time_sleep.waiting]
   count                       = length(var.COMPONENTS)
   key                         = "name"
   resource_id                 = element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
@@ -25,7 +24,6 @@ resource "aws_ec2_tag" "spot" {
 }
 
 resource "aws_route53_record" "dns" {
-  depends_on                  = [aws_ec2_tag.spot]
   count                       = length(var.COMPONENTS)
   name                        = "${element(var.COMPONENTS, count.index)}.roboshop.internal"
   type                        = "A"
