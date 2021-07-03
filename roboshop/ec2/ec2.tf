@@ -3,7 +3,7 @@ resource "aws_spot_instance_request" "launch" {
   ami                         = "ami-059e6ca6474628ef0"
   spot_price                  = "0.0031"
   instance_type               = "t2.micro"
-  vpc_security_group_ids      = [element(aws_spot_instance_request.launch.id,count.index )]
+  vpc_security_group_ids      = ["sg-078ae966242083129"]
 
   tags = {
     Name                      = element(var.COMPONENTS,count.index )
