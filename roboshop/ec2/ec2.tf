@@ -18,7 +18,7 @@ resource "time_sleep" "waiting" {
 resource "aws_ec2_tag" "spot" {
   count                       = length(var.COMPONENTS)
   key                         = "name"
-  resource_id                 = element(aws_spot_instance_request.launch.*.spot_instance_id,count.index )
+  resource_id                 = element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
   value                       = element(var.COMPONENTS,count.index )
 }
 
@@ -28,12 +28,9 @@ resource "aws_route53_record" "dns" {
   type                        = "A"
   zone_id                     = "Z048532427Z8A2VSNE7P3"
   ttl                         = "300"
-  records                     = [aws_spot_instance_request.launch.*.private_ip,count.index]
+  records                     = [element(aws_spot_instance_request.launch.*.private_ip,count.index)]
 }
 
 
 
 
-provider "aws" {
-  region = "us-east-1"
-}
