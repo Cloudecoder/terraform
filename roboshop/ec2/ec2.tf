@@ -17,11 +17,20 @@ resource "time_sleep" "waiting" {
 }
 
 resource "aws_ec2_tag" "spot" {
+  depends_on                  = [time_sleep.waiting]
   count                       = length(var.COMPONENTS)
   key                         = "name"
   resource_id                 =  element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
   value                       = element(var.COMPONENTS,count.index)
 }
+
+resource "aws_ec2_tag" "tag" {
+  count                       = length(var.COMPONENTS)
+  key                         = "monitor"
+  resource_id                 =  element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
+  value                       = "yes"
+}
+
 
 resource "aws_route53_record" "dns" {
   count                       = length(var.COMPONENTS)
