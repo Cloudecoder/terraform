@@ -11,12 +11,18 @@ resource "aws_spot_instance_request" "launch" {
 }
 variable "COMPONENTS" {}
 
-resource "time_sleep" "waiting" {
-  depends_on                  = [aws_spot_instance_request.launch]
-  create_duration             = "120s"
+resource "null_resource" "wait" {
+  depends_on = [aws_spot_instance_request.launch]
+  triggers = {
+    abc = timestamp()
+  }
+  provisioner "local-exec" {
+    command = "sleep60"
+  }
 }
+
 resource "aws_ec2_tag" "spot" {
-  depends_on                  = [time_sleep.waiting]
+  depends_on                  = [null_resource.wait]
   count                       = length(var.COMPONENTS)
   key                         = "name"
   resource_id                 = element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
@@ -24,7 +30,7 @@ resource "aws_ec2_tag" "spot" {
 }
 
 resource "aws_ec2_tag" "tag" {
-  depends_on                  = [time_sleep.waiting]
+  depends_on                  = [null_resource.wait]
   count                       = length(var.COMPONENTS)
   key                         = "monitor"
   resource_id                 =  element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
@@ -33,7 +39,7 @@ resource "aws_ec2_tag" "tag" {
 
 
 resource "aws_route53_record" "dns" {
-  depends_on                  = [time_sleep.waiting]
+  depends_on                  = [null_resource.wait]
   count                       = length(var.COMPONENTS)
   name                        = "${element(var.COMPONENTS, count.index)}.roboshop.internal"
   type                        = "A"
