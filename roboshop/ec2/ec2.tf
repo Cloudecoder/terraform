@@ -17,7 +17,7 @@ resource "null_resource" "wait" {
     abc = timestamp()
   }
   provisioner "local-exec" {
-    command = "sleep60"
+    command = "sleep 60"
   }
 }
 
