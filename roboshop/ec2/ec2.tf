@@ -19,7 +19,7 @@ resource "aws_ec2_tag" "spot" {
   depends_on                  = [time_sleep.waiting]
   count                       = length(var.COMPONENTS)
   key                         = "name"
-  resource_id                 =  element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
+  resource_id                 = element(aws_spot_instance_request.launch.*.spot_instance_id,count.index)
   value                       = element(var.COMPONENTS,count.index)
 }
 
