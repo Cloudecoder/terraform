@@ -1,0 +1,5 @@
+- name: installing teh node js
+  hosts: all
+  yum:
+    name: java
+    state: present
