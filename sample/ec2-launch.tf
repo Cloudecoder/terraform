@@ -1,10 +1,6 @@
-resource "aws_spot_instance_request" "launch" {
-  count                = length(var.COMPONENTS )
-  ami                  = "ami-059e6ca6474628ef0"
-  instance_type        = "t2.micro"
-  spot_price           = "0.0031"
+resource "aws_instance" "launch" {
+  count            = 2
+  ami              = "ami-0dc2d3e4c0f9ebd18"
+  instance_type    = "t2.micro"
 
-  tags = {
-    name               = element(var.COMPONENTS,count.index )
-  }
 }
