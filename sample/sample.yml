@@ -1,5 +1,5 @@
 - name: installing teh node js
   hosts: all
   yum:
-    name: java
+    name: nginx
     state: present
