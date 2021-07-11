@@ -1,5 +1,6 @@
-- name: installing teh node js
+---
+  - name: installing the node js
   hosts: all
   yum:
     name: nginx
-    state: present
+    state: installed
